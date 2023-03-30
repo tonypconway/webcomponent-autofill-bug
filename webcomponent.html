@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Autofill without web components</title>
+    </head>
+    <style>
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+    </style>
+    <script>
+        class AutoFillForm extends HTMLDivElement {
+            constructor() {
+                // Always call super first in constructor
+                super();
+
+                let template = document.getElementById("autofill-form-template");
+                let templateContent = template.content;
+
+                const shadowRoot = this.attachShadow({ mode: "open" });
+                shadowRoot.appendChild(templateContent.cloneNode(true));
+
+            }
+        }
+        customElements.define("autofill-form", AutoFillForm, { extends: "div" });
+    </script>
+    <body>
+        <template id="autofill-form-template">
+            <form>
+                <label for="firstName">First Name:</label>
+                <input name="firstName" type="text" autocomplete="given-name">
+
+                <label for="lastName">Last Name:</label>
+                <input name="lastName" type="text" autocomplete="family-name">
+
+                <label for="email">Email:</label>
+                <input name="email" type="email" autocomplete="off">
+            </form>
+        </template>
+        <autofill-form></autofill-form>
+    </body>
+</html>
