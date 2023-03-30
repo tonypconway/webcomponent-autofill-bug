@@ -9,7 +9,7 @@
         }
     </style>
     <script>
-        class AutoFillForm extends HTMLDivElement {
+        customElements.define("autofill-form", class AutoFillForm extends HTMLElement {
             constructor() {
                 // Always call super first in constructor
                 super();
@@ -21,8 +21,7 @@
                 shadowRoot.appendChild(templateContent.cloneNode(true));
 
             }
-        }
-        customElements.define("autofill-form", AutoFillForm, { extends: "div" });
+        });
     </script>
     <body>
         <template id="autofill-form-template">
