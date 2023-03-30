@@ -20,7 +20,6 @@
                         margin-top: 1rem;
                     }
                 </style>
-                <form id="autofill-form">
                     <label>First Name:
                     <input name="firstName" type="text" autocomplete="given-name">
                     </label>
@@ -34,27 +33,29 @@
                     <label for="password">Password:</label>
                     <input name="password" type="password" autocomplete="password">
                     
-                    <button id="save-details">Save details</button>  
-                </form> 
-            `
-
-            shadowRoot.getElementById('autofill-form').addEventListener('submit',
-                (e) => {
-                    e.preventDefault();
-                    const data = new FormData(e.target);
-                    const value = Object.fromEntries(data.entries());
-                    localStorage.setItem('data', JSON.stringify(value))
-                }
-            )
+                    <button id="save-details">Save details</button>              `
 
         }
 
     });
+    const init = () => {
+       document.getElementById('autofill-form').addEventListener('submit',
+        (e) => {
+            e.preventDefault();
+            const data = new FormData(e.target);
+            const value = Object.fromEntries(data.entries());
+            localStorage.setItem('data', JSON.stringify(value))
+        }
+    ) 
+    }
+    
 
 </script>
 
-<body>
-    <autofill-form></autofill-form>
+<body onload="init()">
+    <form id="autofill-form">
+        <autofill-form></autofill-form>
+    </form>
 </body>
 
 </html>
