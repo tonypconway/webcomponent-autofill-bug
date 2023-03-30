@@ -2,12 +2,6 @@
     <head>
         <title>Autofill without web components</title>
     </head>
-    <style>
-        label {
-            display: block;
-            margin-top: 1rem;
-        }
-    </style>
     <script>
         customElements.define("autofill-form", class AutoFillForm extends HTMLElement {
             constructor() {
@@ -25,6 +19,12 @@
     </script>
     <body>
         <template id="autofill-form-template">
+            <style>
+                label {
+                    display: block;
+                    margin-top: 1rem;
+                }
+            </style>
             <form>
                 <label for="firstName">First Name:</label>
                 <input name="firstName" type="text" autocomplete="given-name">
