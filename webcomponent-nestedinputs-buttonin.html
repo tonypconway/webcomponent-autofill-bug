@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <title>Autofill without web components</title>
+</head>
+<script>
+    customElements.define("autofill-form", class AutoFillForm extends HTMLElement {
+
+        constructor() {
+            // Always call super first in constructor
+            super();
+
+            let template = document.getElementById("autofill-form-template");
+            let templateContent = template.content;
+
+            const shadowRoot = this.attachShadow({ mode: "open" });
+
+            shadowRoot.appendChild(templateContent.cloneNode(true));
+
+        }
+
+    });
+    const init = () => {
+        document.getElementById('autofill-form').addEventListener('submit',
+            (e) => {
+                e.preventDefault();
+
+                console.log(e.target);
+
+                const data = new FormData(e.target);
+                const value = Object.fromEntries(data.entries());
+                localStorage.setItem('data', JSON.stringify(value))
+            }
+        )
+    }
+
+
+</script>
+
+<body onload="init()">
+
+    <template id="autofill-form-template">
+        <style>
+            label,
+            button {
+                display: block;
+                margin-top: 1rem;
+            }
+        </style>
+        <label for="firstName">First Name:</label>
+        <input name="firstName" type="text" autocomplete="given-name">
+
+        <label for="lastName">Last Name:</label>
+        <input name="lastName" type="text" autocomplete="family-name">
+
+        <label for="username">Username:</label>
+        <input name="username" type="username" autocomplete="username">
+
+        <label for="password">Password:</label>
+        <input name="password" type="password" autocomplete="password">
+
+        <input type="submit" value="Save Details" id="save-details"/>
+
+    </template>
+
+    <form id="autofill-form">
+        <autofill-form></autofill-form>
+    </form>
+</body>
+
+</html>

@@ -24,10 +24,16 @@
             (e) => {
                 e.preventDefault();
 
-                console.log(e.target);
-
-                const data = new FormData(e.target);
-                const value = Object.fromEntries(data.entries());
+                // This would be a cleaner way to do it
+                // const data = new FormData(e.target);
+                // data is an empty object!
+                // const value = Object.fromEntries(data.entries());
+                
+                const value = {};
+                document.querySelector('autofill-form').shadowRoot.querySelectorAll('input').forEach(element => {
+                  value[element.name] = element.value;  
+                });
+                console.log(value);
                 localStorage.setItem('data', JSON.stringify(value))
             }
         )
@@ -58,12 +64,12 @@
         <label for="password">Password:</label>
         <input name="password" type="password" autocomplete="password">
 
-        <button id="save-details">Save details</button>
-
     </template>
 
     <form id="autofill-form">
         <autofill-form></autofill-form>
+        <input type="submit" value="Save Details" id="save-details"/>
+
     </form>
 </body>
 

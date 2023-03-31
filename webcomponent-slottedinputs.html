@@ -22,11 +22,19 @@
                     e.preventDefault();
                     const data = new FormData(e.target);
                     const value = Object.fromEntries(data.entries());
-                    localStorage.setItem('data', JSON.stringify(value))
+
+                    //awkward code to handle slots
+                    shadowRoot.querySelectorAll('slot').forEach(element=>{
+                        const input = element.assignedNodes()[0].querySelector('input');
+                        value[input.name] = input.value;
+                    });
+
+                    localStorage.setItem('data', JSON.stringify(value));
                 }
             );
 
         }
+
 
     });
 
@@ -53,7 +61,7 @@
             <slot name="passwordField">
             </slot>
 
-            <button id="save-details">Save details</button>
+            <input type="submit" value="Save Details" id="save-details"/>
         </form>
     </template>
     <autofill-form>
