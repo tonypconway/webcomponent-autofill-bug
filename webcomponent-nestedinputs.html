@@ -10,52 +10,73 @@
             // Always call super first in constructor
             super();
 
+            let template = document.getElementById("autofill-form-template");
+            let templateContent = template.content;
+
             const shadowRoot = this.attachShadow({ mode: "open" });
 
-            shadowRoot.innerHTML = `
-                <style>
-                    label,
-                    button {
-                        display: block;
-                        margin-top: 1rem;
-                    }
-                </style>
-                    <label>First Name:
-                    <input name="firstName" type="text" autocomplete="given-name">
-                    </label>
-
-                    <label for="lastName">Last Name:</label>
-                    <input name="lastName" type="text" autocomplete="family-name">
-
-                    <label for="username">Username:</label>
-                    <input name="username" type="username" autocomplete="username">
-
-                    <label for="password">Password:</label>
-                    <input name="password" type="password" autocomplete="password">
-                    
-                    <button id="save-details">Save details</button>              `
-
+            shadowRoot.appendChild(templateContent.cloneNode(true));
         }
 
     });
     const init = () => {
-       document.getElementById('autofill-form').addEventListener('submit',
-        (e) => {
-            e.preventDefault();
-            const data = new FormData(e.target);
-            const value = Object.fromEntries(data.entries());
-            localStorage.setItem('data', JSON.stringify(value))
-        }
-    ) 
+        document.getElementById('autofill-form').addEventListener('submit',
+            (e) => {
+                e.preventDefault();
+
+                console.log(e.target);
+
+                const data = new FormData(e.target);
+                const value = Object.fromEntries(data.entries());
+                localStorage.setItem('data', JSON.stringify(value))
+            }
+        )
     }
-    
+
 
 </script>
 
 <body onload="init()">
+
+    <template id="autofill-form-template">
+        <style>
+            label,
+            button {
+                display: block;
+                margin-top: 1rem;
+            }
+        </style>
+        <label for="firstName">First Name:</label>
+        <input name="firstName" type="text" autocomplete="given-name">
+
+        <label for="lastName">Last Name:</label>
+        <input name="lastName" type="text" autocomplete="family-name">
+
+        <label for="username">Username:</label>
+        <input name="username" type="username" autocomplete="username">
+
+        <label for="password">Password:</label>
+        <input name="password" type="password" autocomplete="password">
+
+        <button id="save-details">Save details</button>
+
+    </template>
+
     <form id="autofill-form">
         <autofill-form></autofill-form>
     </form>
 </body>
+
+<p>
+    Notes:
+<ul>
+    <li>If the button is outside of the template, autofill for username and password works! But if you put the button
+        inside the template, it doesn't.</li>
+    <li>If you attempt to create `new FormData(e.target)` on submit of the form with the button outside the template,
+        you get empty data - this is probably WAI?</li>
+    <li>If you move the button inside the template and click it, the submit event listener for the form never fires at all.</li>
+</ul>
+
+</p>
 
 </html>
