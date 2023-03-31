@@ -4,8 +4,8 @@ I've been playing with Lit/web components lately to work out how realistic it wo
 
 1. [vanilla.html](vanilla.html) is just basic HTML, no web components, with a `submit` handler to save the `form` data to `localStorage`.
 1. [webcomponent.html](webcomponent.html) is the basic web component version
-1. [webcomponent-nestedinputs-buttoninside.html](webcomponent-nestedinputs-buttoninside.html) declares the `form` element outisde the web component, then renders the `label` and `input` elements and `button` inside the web component.
-1. [webcomponent-nestedinputs-buttonoutside.html](webcomponent-nestedinputs-buttoninside.html) declares the `form` element outisde the web component, then renders the `label` and `input` elements and `button` **outside** the web component.
+1. [webcomponent-nestedinputs-buttonin.html](webcomponent-nestedinputs-buttonin.html) declares the `form` element outisde the web component, then renders the `label` and `input` elements and `button` inside the web component.
+1. [webcomponent-nestedinputs-buttonout.html](webcomponent-nestedinputs-buttonout.html) declares the `form` element outisde the web component, then renders the `label` and `input` elements and `button` **outside** the web component.
 1. [webcomponent-slottedinputs.html](webcomponent-slottedinputs.html) adds the username and password inputs via slots.
 
 The code should, in theory, grab whatever the user has input into the four fields and dump them into local storage as JSON when the user clicks the "Save details" `button`.  This should trigger Chrome to remember the username and password for the current domain; I've been running on e.g. localhost:12897, just for uniqueness.  
